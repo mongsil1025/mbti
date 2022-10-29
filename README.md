@@ -2,4 +2,7 @@
 
 With `amplify init`, a few things happen
 
-- top level directory `amplify` : stores backend definition
+- Top level directory `amplify` : stores backend definition
+  - function as infrastructure-as-code templates
+  - GraphQL, API, Authentication
+- `aws-exports.js` in the src directory : Confituration for the services created with amplify
