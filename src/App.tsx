@@ -1,11 +1,18 @@
 import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
-import "./App.css";
-import { API, graphqlOperation } from "aws-amplify";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import { listTodos } from "./graphql/queries";
+import { Amplify, API, graphqlOperation } from "aws-amplify";
 import { createTodo } from "./graphql/mutations";
-import internal from "stream";
+import { listTodos } from "./graphql/queries";
+import {
+  withAuthenticator,
+  Button,
+  Heading,
+  WithAuthenticatorProps,
+} from "@aws-amplify/ui-react";
+import { GraphQLResult } from "@aws-amplify/api-graphql";
+import "@aws-amplify/ui-react/styles.css";
+
+import awsExports from "./aws-exports";
+Amplify.configure(awsExports);
 
 interface ToDo {
   id: number;
@@ -15,7 +22,7 @@ interface ToDo {
 
 const initialState: ToDo = { id: 0, name: "", description: "" };
 
-function App() {
+function App({ signOut, user }: WithAuthenticatorProps) {
   const [formState, setFormState] = useState(initialState);
   const [todos, setTodos] = useState([initialState]);
 
@@ -53,6 +60,8 @@ function App() {
 
   return (
     <div style={styles.container}>
+      <Heading level={1}>Hello {user?.username}</Heading>
+      <Button onClick={signOut}>Sign out</Button>
       <h2>Amplify Todos</h2>
       <input
         onChange={(event) => setInput("name", event.target.value)}
@@ -107,4 +116,4 @@ const styles = {
   },
 };
 
-export default App;
+export default withAuthenticator(App);
