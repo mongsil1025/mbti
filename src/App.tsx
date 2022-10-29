@@ -7,6 +7,8 @@ import {
   Button,
   Heading,
   WithAuthenticatorProps,
+  Text,
+  TextField,
 } from "@aws-amplify/ui-react";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import "@aws-amplify/ui-react/styles.css";
@@ -61,27 +63,35 @@ function App({ signOut, user }: WithAuthenticatorProps) {
   return (
     <div style={styles.container}>
       <Heading level={1}>Hello {user?.username}</Heading>
-      <Button onClick={signOut}>Sign out</Button>
-      <h2>Amplify Todos</h2>
-      <input
-        onChange={(event) => setInput("name", event.target.value)}
-        style={styles.input}
-        value={formState.name}
+      <Button style={styles.button} onClick={signOut}>
+        Sign out
+      </Button>
+      <Heading level={2}>Amplify Todos</Heading>
+      <TextField
+        label="name"
         placeholder="Name"
-      />
-      <input
-        onChange={(event) => setInput("description", event.target.value)}
+        onChange={(event: { target: { value: string } }) =>
+          setInput("name", event.target.value)
+        }
         style={styles.input}
-        value={formState.description}
-        placeholder="Description"
+        defaultValue={formState.name}
       />
-      <button style={styles.button} onClick={addTodo}>
+      <TextField
+        label="description"
+        placeholder="Description"
+        onChange={(event: { target: { value: string } }) =>
+          setInput("description", event.target.value)
+        }
+        style={styles.input}
+        defaultValue={formState.description}
+      />
+      <Button style={styles.button} onClick={addTodo}>
         Create Todo
-      </button>
+      </Button>
       {todos.map((todo, index) => (
         <div key={todo.id ? todo.id : index} style={styles.todo}>
-          <p style={styles.todoName}>{todo.name}</p>
-          <p style={styles.todoDescription}>{todo.description}</p>
+          <Text style={styles.todoName}>{todo.name}</Text>
+          <Text style={styles.todoDescription}>{todo.description}</Text>
         </div>
       ))}
     </div>
