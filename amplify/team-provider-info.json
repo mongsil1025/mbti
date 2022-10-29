@@ -17,6 +17,12 @@
       },
       "auth": {
         "mbti11f77100": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d36338f4ug3kex",
+          "type": "manual"
+        }
       }
     }
   }
