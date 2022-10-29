@@ -10,6 +10,11 @@
       "StackName": "amplify-mbti-dev-212450",
       "StackId": "arn:aws:cloudformation:ap-northeast-2:205562629531:stack/amplify-mbti-dev-212450/afba5fc0-5784-11ed-814f-0a7a1d5aff90",
       "AmplifyAppId": "d36338f4ug3kex"
+    },
+    "categories": {
+      "api": {
+        "mbti": {}
+      }
     }
   }
 }
