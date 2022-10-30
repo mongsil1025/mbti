@@ -43,3 +43,54 @@ export const deleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const createMbti = /* GraphQL */ `
+  mutation CreateMbti(
+    $input: CreateMbtiInput!
+    $condition: ModelMbtiConditionInput
+  ) {
+    createMbti(input: $input, condition: $condition) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMbti = /* GraphQL */ `
+  mutation UpdateMbti(
+    $input: UpdateMbtiInput!
+    $condition: ModelMbtiConditionInput
+  ) {
+    updateMbti(input: $input, condition: $condition) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMbti = /* GraphQL */ `
+  mutation DeleteMbti(
+    $input: DeleteMbtiInput!
+    $condition: ModelMbtiConditionInput
+  ) {
+    deleteMbti(input: $input, condition: $condition) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;

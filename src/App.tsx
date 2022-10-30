@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Amplify, API, graphqlOperation } from "aws-amplify";
-import { createTodo } from "./graphql/mutations";
-import { listTodos } from "./graphql/queries";
+import { createMbti, createTodo } from "./graphql/mutations";
+import { listMbtis } from "./graphql/queries";
 import {
   withAuthenticator,
   Button,
@@ -12,6 +12,7 @@ import {
 } from "@aws-amplify/ui-react";
 import { GraphQLResult } from "@aws-amplify/api-graphql";
 import "@aws-amplify/ui-react/styles.css";
+import { Radio, RadioGroupField } from "@aws-amplify/ui-react";
 
 import awsExports from "./aws-exports";
 Amplify.configure(awsExports);
@@ -22,51 +23,75 @@ interface ToDo {
   description: string;
 }
 
+interface Mbti {
+  id: number;
+  name: string;
+  energy: string;
+  recognition: string;
+  decision: string;
+  life_pattern: string;
+}
+
 const initialState: ToDo = { id: 0, name: "", description: "" };
+const initMbti: Mbti = {
+  id: 0,
+  name: "",
+  energy: "",
+  recognition: "",
+  decision: "",
+  life_pattern: "",
+};
 
 function App({ signOut, user }: WithAuthenticatorProps) {
-  const [formState, setFormState] = useState(initialState);
+  const [formState, setFormState] = useState(initMbti);
+  const [mbtis, setMbtis] = useState([initMbti]);
   const [todos, setTodos] = useState([initialState]);
 
   useEffect(() => {
-    fetchTodos();
+    fetchMbtis();
   }, []);
 
   function setInput(key: string, value: string) {
     setFormState({ ...formState, [key]: value });
   }
 
-  async function fetchTodos() {
+  async function fetchMbtis() {
     try {
-      const todoData: GraphQLResult<any> = await API.graphql(
-        graphqlOperation(listTodos)
+      const mbtiData: GraphQLResult<any> = await API.graphql(
+        graphqlOperation(listMbtis)
       );
-      const todos = todoData.data.listTodos.items;
-      setTodos(todos);
+      const mbtis = mbtiData.data.listMbtis.items;
+      setMbtis(mbtis);
     } catch (err) {
       console.log("error fetching todos");
     }
   }
 
-  async function addTodo() {
+  async function addMbti() {
     try {
-      if (!formState.name || !formState.description) return;
-      const todo = { ...formState };
-      setTodos([...todos, todo]);
-      setFormState(initialState);
-      await API.graphql(graphqlOperation(createTodo, { input: todo }));
+      const { name, energy, recognition, decision, life_pattern } = {
+        ...formState,
+      };
+      if (!name || !energy || !recognition || !decision || !life_pattern)
+        return;
+      setMbtis([...mbtis, { ...formState }]);
+      await API.graphql(
+        graphqlOperation(createMbti, {
+          input: { name, energy, recognition, decision, life_pattern },
+        })
+      );
     } catch (err) {
-      console.log("error creating todo:", err);
+      console.log("error creating mbti:", err);
     }
   }
 
   return (
     <div style={styles.container}>
-      <Heading level={1}>Hello {user?.username}</Heading>
+      <Heading level={1}>Hello {user?.attributes?.email}</Heading>
       <Button style={styles.button} onClick={signOut}>
         Sign out
       </Button>
-      <Heading level={2}>Amplify Todos</Heading>
+      <Heading level={2}>Mbti Maps</Heading>
       <TextField
         label="name"
         placeholder="Name"
@@ -76,22 +101,62 @@ function App({ signOut, user }: WithAuthenticatorProps) {
         style={styles.input}
         defaultValue={formState.name}
       />
-      <TextField
-        label="description"
-        placeholder="Description"
+      <RadioGroupField
+        label="Energy"
+        name="energy"
+        direction="row"
         onChange={(event: { target: { value: string } }) =>
-          setInput("description", event.target.value)
+          setInput("energy", event.target.value)
         }
-        style={styles.input}
-        defaultValue={formState.description}
-      />
-      <Button style={styles.button} onClick={addTodo}>
-        Create Todo
+      >
+        <Radio value="E">E</Radio>
+        <Radio value="I">I</Radio>
+      </RadioGroupField>
+      <RadioGroupField
+        label="Recognition"
+        name="recognition"
+        direction="row"
+        onChange={(event: { target: { value: string } }) =>
+          setInput("recognition", event.target.value)
+        }
+      >
+        <Radio value="N">N</Radio>
+        <Radio value="S">S</Radio>
+      </RadioGroupField>
+      <RadioGroupField
+        label="Decision"
+        name="decision"
+        direction="row"
+        onChange={(event: { target: { value: string } }) =>
+          setInput("decision", event.target.value)
+        }
+      >
+        <Radio value="T">T</Radio>
+        <Radio value="F">F</Radio>
+      </RadioGroupField>
+      <RadioGroupField
+        label="LivePattern"
+        name="live_pattern"
+        direction="row"
+        onChange={(event: { target: { value: string } }) =>
+          setInput("life_pattern", event.target.value)
+        }
+      >
+        <Radio value="J">J</Radio>
+        <Radio value="P">P</Radio>
+      </RadioGroupField>
+      <Button style={styles.button} onClick={addMbti}>
+        Create Mbti
       </Button>
-      {todos.map((todo, index) => (
-        <div key={todo.id ? todo.id : index} style={styles.todo}>
-          <Text style={styles.todoName}>{todo.name}</Text>
-          <Text style={styles.todoDescription}>{todo.description}</Text>
+      {mbtis.map((mbti, index) => (
+        <div key={mbti.id ? mbti.id : index} style={styles.todo}>
+          <Text style={styles.todoName}>{mbti.name}</Text>
+          <Text style={styles.todoDescription}>
+            {mbti.energy}
+            {mbti.recognition}
+            {mbti.decision}
+            {mbti.life_pattern}
+          </Text>
         </div>
       ))}
     </div>

@@ -34,3 +34,45 @@ export const onDeleteTodo = /* GraphQL */ `
     }
   }
 `;
+export const onCreateMbti = /* GraphQL */ `
+  subscription OnCreateMbti($filter: ModelSubscriptionMbtiFilterInput) {
+    onCreateMbti(filter: $filter) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMbti = /* GraphQL */ `
+  subscription OnUpdateMbti($filter: ModelSubscriptionMbtiFilterInput) {
+    onUpdateMbti(filter: $filter) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMbti = /* GraphQL */ `
+  subscription OnDeleteMbti($filter: ModelSubscriptionMbtiFilterInput) {
+    onDeleteMbti(filter: $filter) {
+      id
+      name
+      energy
+      recognition
+      decision
+      life_pattern
+      createdAt
+      updatedAt
+    }
+  }
+`;
