@@ -18,46 +18,36 @@ import awsExports from "./aws-exports";
 
 import { MbtiCreateForm } from "./ui-components";
 import { AlertHeadingExample } from "./components/Header";
+import { MbtiTable } from "./components/MbtiList";
+import { Decision, Energy, LifePattern, Recognition } from "./models";
 
 Amplify.configure(awsExports);
 
-interface ToDo {
-  id: number;
-  name: string;
-  description: string;
-}
-
 interface Mbti {
-  id: number;
+  id: string;
   name: string;
-  energy: string;
-  recognition: string;
-  decision: string;
-  life_pattern: string;
+  energy: Energy;
+  recognition: Recognition;
+  decision: Decision;
+  life_pattern: LifePattern;
 }
 
-const initialState: ToDo = { id: 0, name: "", description: "" };
 const initMbti: Mbti = {
-  id: 0,
+  id: "",
   name: "",
-  energy: "",
-  recognition: "",
-  decision: "",
-  life_pattern: "",
+  energy: Energy.E,
+  recognition: Recognition.N,
+  decision: Decision.T,
+  life_pattern: LifePattern.J,
 };
 
 function App({ signOut, user }: WithAuthenticatorProps) {
   const [formState, setFormState] = useState(initMbti);
   const [mbtis, setMbtis] = useState([initMbti]);
-  const [todos, setTodos] = useState([initialState]);
 
   useEffect(() => {
     fetchMbtis();
   }, []);
-
-  function setInput(key: string, value: string) {
-    setFormState({ ...formState, [key]: value });
-  }
 
   async function fetchMbtis() {
     try {
@@ -71,47 +61,20 @@ function App({ signOut, user }: WithAuthenticatorProps) {
     }
   }
 
-  async function addMbti() {
-    try {
-      const { name, energy, recognition, decision, life_pattern } = {
-        ...formState,
-      };
-      if (!name || !energy || !recognition || !decision || !life_pattern)
-        return;
-      setMbtis([...mbtis, { ...formState }]);
-      await API.graphql(
-        graphqlOperation(createMbti, {
-          input: { name, energy, recognition, decision, life_pattern },
-        })
-      );
-    } catch (err) {
-      console.log("error creating mbti:", err);
-    }
-  }
-
   return (
     <div style={styles.container}>
       <AlertHeadingExample email={user?.attributes?.email} />
       <Button onClick={signOut}>Sign out</Button>
 
       <MbtiCreateForm />
-      {mbtis.map((mbti, index) => (
-        <div key={mbti.id ? mbti.id : index}>
-          <Text>{mbti.name}</Text>
-          <Text>
-            {mbti.energy}
-            {mbti.recognition}
-            {mbti.decision}
-            {mbti.life_pattern}
-          </Text>
-        </div>
-      ))}
+      <MbtiTable data={mbtis} />
     </div>
   );
 }
 
 const styles = {
   container: {
+    width: 1000,
     margin: "0 auto",
     display: "flex",
     flexDirection: "column",
