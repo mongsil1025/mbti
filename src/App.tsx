@@ -63,7 +63,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
       const mbtis = mbtiData.data.listMbtis.items;
       setMbtis(mbtis);
     } catch (err) {
-      console.log("error fetching todos");
+      console.log("error fetching todos", err);
     }
   }
 
