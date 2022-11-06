@@ -2,6 +2,26 @@ import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
+export enum LifePattern {
+  J = "J",
+  P = "P"
+}
+
+export enum Decision {
+  T = "T",
+  F = "F"
+}
+
+export enum Recognition {
+  N = "N",
+  S = "S"
+}
+
+export enum Energy {
+  E = "E",
+  I = "I"
+}
+
 type MbtiMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }
@@ -9,10 +29,11 @@ type MbtiMetaData = {
 type EagerMbti = {
   readonly id: string;
   readonly name: string;
-  readonly energy: string;
-  readonly recognition: string;
-  readonly decision: string;
-  readonly life_pattern: string;
+  readonly energy: Energy | keyof typeof Energy;
+  readonly recognition: Recognition | keyof typeof Recognition;
+  readonly decision: Decision | keyof typeof Decision;
+  readonly life_pattern: LifePattern | keyof typeof LifePattern;
+  readonly full_text?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -20,10 +41,11 @@ type EagerMbti = {
 type LazyMbti = {
   readonly id: string;
   readonly name: string;
-  readonly energy: string;
-  readonly recognition: string;
-  readonly decision: string;
-  readonly life_pattern: string;
+  readonly energy: Energy | keyof typeof Energy;
+  readonly recognition: Recognition | keyof typeof Recognition;
+  readonly decision: Decision | keyof typeof Decision;
+  readonly life_pattern: LifePattern | keyof typeof LifePattern;
+  readonly full_text?: string | null;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

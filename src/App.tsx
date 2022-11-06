@@ -15,6 +15,9 @@ import "@aws-amplify/ui-react/styles.css";
 import { Radio, RadioGroupField } from "@aws-amplify/ui-react";
 
 import awsExports from "./aws-exports";
+
+import { MbtiCreateForm } from "./ui-components";
+
 Amplify.configure(awsExports);
 
 interface ToDo {
@@ -92,6 +95,8 @@ function App({ signOut, user }: WithAuthenticatorProps) {
         Sign out
       </Button>
       <Heading level={2}>Mbti Maps</Heading>
+
+      <MbtiCreateForm />
       <TextField
         label="name"
         placeholder="Name"

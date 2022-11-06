@@ -20,29 +20,44 @@ export const schema = {
                 "energy": {
                     "name": "energy",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "Energy"
+                    },
                     "isRequired": true,
                     "attributes": []
                 },
                 "recognition": {
                     "name": "recognition",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "Recognition"
+                    },
                     "isRequired": true,
                     "attributes": []
                 },
                 "decision": {
                     "name": "decision",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "Decision"
+                    },
                     "isRequired": true,
                     "attributes": []
                 },
                 "life_pattern": {
                     "name": "life_pattern",
                     "isArray": false,
-                    "type": "String",
+                    "type": {
+                        "enum": "LifePattern"
+                    },
                     "isRequired": true,
+                    "attributes": []
+                },
+                "full_text": {
+                    "name": "full_text",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
                     "attributes": []
                 },
                 "createdAt": {
@@ -88,8 +103,37 @@ export const schema = {
             ]
         }
     },
-    "enums": {},
+    "enums": {
+        "LifePattern": {
+            "name": "LifePattern",
+            "values": [
+                "J",
+                "P"
+            ]
+        },
+        "Decision": {
+            "name": "Decision",
+            "values": [
+                "T",
+                "F"
+            ]
+        },
+        "Recognition": {
+            "name": "Recognition",
+            "values": [
+                "N",
+                "S"
+            ]
+        },
+        "Energy": {
+            "name": "Energy",
+            "values": [
+                "E",
+                "I"
+            ]
+        }
+    },
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "064abfdf09d073e7fa9b24c5822d5b5e"
+    "version": "926a0786ad0e51a416a7c44b70af2f92"
 };

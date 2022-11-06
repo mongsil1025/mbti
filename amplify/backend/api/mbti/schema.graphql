@@ -1,9 +1,30 @@
+enum LifePattern {
+  J
+  P
+}
+
+enum Decision {
+  T
+  F
+}
+
+enum Recognition {
+  N
+  S
+}
+
+enum Energy {
+  E
+  I
+}
+
 type Mbti @model @auth(rules: [{allow: public}]) {
   id: ID!
   name: String!
-  energy: String!
-  recognition: String!
-  decision: String!
-  life_pattern: String!
+  energy: Energy!
+  recognition: Recognition!
+  decision: Decision!
+  life_pattern: LifePattern!
+  full_text: String
 }
  
