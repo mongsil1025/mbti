@@ -1,17 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Amplify, API, graphqlOperation } from "aws-amplify";
-import { createMbti } from "./graphql/mutations";
-import { listMbtiDescriptions, listMbtis } from "./graphql/queries";
 import {
   withAuthenticator,
   WithAuthenticatorProps,
 } from "@aws-amplify/ui-react";
-import { GraphQLResult } from "@aws-amplify/api-graphql";
-import "@aws-amplify/ui-react/styles.css";
-import { Radio, RadioGroupField } from "@aws-amplify/ui-react";
-
+import { Amplify, API, graphqlOperation } from "aws-amplify";
 import awsExports from "./aws-exports";
 
+import "@aws-amplify/ui-react/styles.css";
 import { AlertHeadingExample } from "./components/Header";
 import { MbtiTable } from "./components/MbtiList";
 import { Decision, Energy, LifePattern, Recognition } from "./models";
@@ -56,28 +51,13 @@ function App({ signOut, user }: WithAuthenticatorProps) {
   }
 
   useEffect(() => {
-    // fetchMbtis();
-    fetchMbtiDescriptions();
+    fetchMbtis();
   }, []);
 
   async function fetchMbtis() {
     try {
-      const mbtiData: GraphQLResult<any> = await API.graphql(
-        graphqlOperation(listMbtis)
-      );
+      const mbtiData = await API.get("api", "/mbtis", { headers: {} });
       const mbtis = mbtiData.data.listMbtis.items;
-      setMbtis(mbtis);
-    } catch (err) {
-      console.log("error fetching todos", err);
-    }
-  }
-
-  async function fetchMbtiDescriptions() {
-    try {
-      const mbtiDescriptionList: GraphQLResult<any> = await API.graphql(
-        graphqlOperation(listMbtiDescriptions)
-      );
-      const mbtis = mbtiDescriptionList.data.listMbtiDescriptions.items;
       setMbtis(mbtis);
     } catch (err) {
       console.log("error fetching todos", err);
@@ -92,11 +72,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
       if (!name || !energy || !recognition || !decision || !life_pattern)
         return;
       setMbtis([...mbtis, { ...formState }]);
-      await API.graphql(
-        graphqlOperation(createMbti, {
-          input: { name, energy, recognition, decision, life_pattern },
-        })
-      );
+      await API.post("api", "/mbtis", { headers: {} });
     } catch (err) {
       console.log("error creating mbti:", err);
     }
