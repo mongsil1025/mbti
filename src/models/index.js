@@ -2,6 +2,25 @@
 import { initSchema } from '@aws-amplify/datastore';
 import { schema } from './schema';
 
+const MbtiEnum = {
+  "ISTJ": "ISTJ",
+  "ISTP": "ISTP",
+  "INFJ": "INFJ",
+  "INTJ": "INTJ",
+  "ISFJ": "ISFJ",
+  "ISFP": "ISFP",
+  "INFP": "INFP",
+  "INTP": "INTP",
+  "ESTJ": "ESTJ",
+  "ESFP": "ESFP",
+  "ENFP": "ENFP",
+  "ENTP": "ENTP",
+  "ESFJ": "ESFJ",
+  "ESTP": "ESTP",
+  "ENFJ": "ENFJ",
+  "ENTJ": "ENTJ"
+};
+
 const LifePattern = {
   "J": "J",
   "P": "P"
@@ -22,10 +41,12 @@ const Energy = {
   "I": "I"
 };
 
-const { Mbti } = initSchema(schema);
+const { Description, Mbti } = initSchema(schema);
 
 export {
+  Description,
   Mbti,
+  MbtiEnum,
   LifePattern,
   Decision,
   Recognition,

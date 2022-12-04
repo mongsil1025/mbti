@@ -1,3 +1,29 @@
+enum MbtiEnum {
+  ISTJ
+  ISTP
+  INFJ
+  INTJ
+  ISFJ
+  ISFP
+  INFP
+  INTP
+  ESTJ
+  ESFP
+  ENFP
+  ENTP
+  ESFJ
+  ESTP
+  ENFJ
+  ENTJ
+}
+
+type Description @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  type: String
+  mbti: MbtiEnum
+  data: String
+}
+
 enum LifePattern {
   J
   P

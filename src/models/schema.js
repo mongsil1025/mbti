@@ -1,5 +1,80 @@
 export const schema = {
     "models": {
+        "Description": {
+            "name": "Description",
+            "fields": {
+                "id": {
+                    "name": "id",
+                    "isArray": false,
+                    "type": "ID",
+                    "isRequired": true,
+                    "attributes": []
+                },
+                "type": {
+                    "name": "type",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "mbti": {
+                    "name": "mbti",
+                    "isArray": false,
+                    "type": {
+                        "enum": "MbtiEnum"
+                    },
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "data": {
+                    "name": "data",
+                    "isArray": false,
+                    "type": "String",
+                    "isRequired": false,
+                    "attributes": []
+                },
+                "createdAt": {
+                    "name": "createdAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                },
+                "updatedAt": {
+                    "name": "updatedAt",
+                    "isArray": false,
+                    "type": "AWSDateTime",
+                    "isRequired": false,
+                    "attributes": [],
+                    "isReadOnly": true
+                }
+            },
+            "syncable": true,
+            "pluralName": "Descriptions",
+            "attributes": [
+                {
+                    "type": "model",
+                    "properties": {}
+                },
+                {
+                    "type": "auth",
+                    "properties": {
+                        "rules": [
+                            {
+                                "allow": "public",
+                                "operations": [
+                                    "create",
+                                    "update",
+                                    "delete",
+                                    "read"
+                                ]
+                            }
+                        ]
+                    }
+                }
+            ]
+        },
         "Mbti": {
             "name": "Mbti",
             "fields": {
@@ -104,6 +179,27 @@ export const schema = {
         }
     },
     "enums": {
+        "MbtiEnum": {
+            "name": "MbtiEnum",
+            "values": [
+                "ISTJ",
+                "ISTP",
+                "INFJ",
+                "INTJ",
+                "ISFJ",
+                "ISFP",
+                "INFP",
+                "INTP",
+                "ESTJ",
+                "ESFP",
+                "ENFP",
+                "ENTP",
+                "ESFJ",
+                "ESTP",
+                "ENFJ",
+                "ENTJ"
+            ]
+        },
         "LifePattern": {
             "name": "LifePattern",
             "values": [
@@ -135,5 +231,5 @@ export const schema = {
     },
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "926a0786ad0e51a416a7c44b70af2f92"
+    "version": "a25efa9d2eb26da746796b40a232faa1"
 };

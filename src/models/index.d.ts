@@ -2,6 +2,25 @@ import { ModelInit, MutableModel } from "@aws-amplify/datastore";
 // @ts-ignore
 import { LazyLoading, LazyLoadingDisabled } from "@aws-amplify/datastore";
 
+export enum MbtiEnum {
+  ISTJ = "ISTJ",
+  ISTP = "ISTP",
+  INFJ = "INFJ",
+  INTJ = "INTJ",
+  ISFJ = "ISFJ",
+  ISFP = "ISFP",
+  INFP = "INFP",
+  INTP = "INTP",
+  ESTJ = "ESTJ",
+  ESFP = "ESFP",
+  ENFP = "ENFP",
+  ENTP = "ENTP",
+  ESFJ = "ESFJ",
+  ESTP = "ESTP",
+  ENFJ = "ENFJ",
+  ENTJ = "ENTJ"
+}
+
 export enum LifePattern {
   J = "J",
   P = "P"
@@ -22,8 +41,36 @@ export enum Energy {
   I = "I"
 }
 
+type DescriptionMetaData = {
+  readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
 type MbtiMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
+}
+
+type EagerDescription = {
+  readonly id: string;
+  readonly type?: string | null;
+  readonly mbti?: MbtiEnum | keyof typeof MbtiEnum | null;
+  readonly data?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+type LazyDescription = {
+  readonly id: string;
+  readonly type?: string | null;
+  readonly mbti?: MbtiEnum | keyof typeof MbtiEnum | null;
+  readonly data?: string | null;
+  readonly createdAt?: string | null;
+  readonly updatedAt?: string | null;
+}
+
+export declare type Description = LazyLoading extends LazyLoadingDisabled ? EagerDescription : LazyDescription
+
+export declare const Description: (new (init: ModelInit<Description, DescriptionMetaData>) => Description) & {
+  copyOf(source: Description, mutator: (draft: MutableModel<Description, DescriptionMetaData>) => MutableModel<Description, DescriptionMetaData> | void): Description;
 }
 
 type EagerMbti = {
