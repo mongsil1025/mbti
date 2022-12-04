@@ -9,7 +9,14 @@ import awsExports from "./aws-exports";
 import "@aws-amplify/ui-react/styles.css";
 import { AlertHeadingExample } from "./components/Header";
 import { MbtiTable } from "./components/MbtiList";
-import { Decision, Energy, LifePattern, Recognition } from "./models";
+import {
+  Decision,
+  Energy,
+  getKeyByValue,
+  LifePattern,
+  MbtiEnum,
+  Recognition,
+} from "./models";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import {
@@ -21,6 +28,7 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import { descriptions } from "./models/predefined_descriptions";
 
 Amplify.configure(awsExports);
 
@@ -59,7 +67,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
 
   useEffect(() => {
     fetchMbtis();
-  }, [mbtis]);
+  }, []);
 
   async function fetchMbtis() {
     try {
@@ -78,13 +86,18 @@ function App({ signOut, user }: WithAuthenticatorProps) {
       };
       if (!username || !energy || !recognition || !decision || !life_style)
         return;
+      const full_mbti: string = energy + recognition + decision + life_style;
+      type FullMbtiType = "ENTJ";
+
       const data = {
         username: username,
-        full_text: energy + recognition + decision + life_style,
+        full_text: full_mbti,
         energy: energy,
         recognition: recognition,
         decision: decision,
         life_style: life_style,
+        // @ts-ignore
+        descriptions: descriptions[MbtiEnum[full_mbti]],
       };
       const payload = {
         headers: {},

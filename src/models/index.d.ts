@@ -41,6 +41,14 @@ export enum Energy {
   I = "I"
 }
 
+export function getKeyByValue(value: string) {
+  const indexOfS = Object.values(MbtiEnum).indexOf(value as unknown as MbtiEnum);
+
+  const key = Object.keys(MbtiEnum)[indexOfS];
+
+  return key;
+}
+
 type DescriptionMetaData = {
   readOnlyFields: 'createdAt' | 'updatedAt';
 }

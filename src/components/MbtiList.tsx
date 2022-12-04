@@ -31,18 +31,7 @@ export const MbtiTable = (props: MbtiTablePropsListType) => (
       <TableRow>
         <TableCell as="th">Name</TableCell>
         <TableCell as="th">MBTI</TableCell>
-        {props.data.map((mbti) => {
-          return (
-            <>
-              {mbti.descriptions &&
-                mbti.descriptions.map((description) => {
-                  return (
-                    <TableCell as="th">{description.display_name}</TableCell>
-                  );
-                })}
-            </>
-          );
-        })}
+        <TableCell as="th">극단적 단점</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
