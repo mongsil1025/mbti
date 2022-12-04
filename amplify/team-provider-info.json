@@ -20,6 +20,18 @@
           "appId": "d36338f4ug3kex",
           "type": "manual"
         }
+      },
+      "function": {
+        "mbtie67c18e4": {
+          "deploymentBucketName": "amplify-mbti-dev-212450-deployment",
+          "s3Key": "amplify-builds/mbtie67c18e4-496e7a5a744d6c55374a-build.zip"
+        }
+      },
+      "api": {
+        "api": {}
+      },
+      "storage": {
+        "mbti": {}
       }
     }
   }

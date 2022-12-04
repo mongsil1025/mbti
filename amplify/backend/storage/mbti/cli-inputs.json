@@ -1,0 +1,10 @@
+{
+  "resourceName": "mbti",
+  "tableName": "mbti",
+  "partitionKey": {
+    "fieldName": "name",
+    "fieldType": "string"
+  },
+  "gsi": [],
+  "triggerFunctions": []
+}
