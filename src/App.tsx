@@ -30,7 +30,8 @@ interface Mbti {
   recognition: Recognition;
   decision: Decision;
   life_style: LifePattern;
-  descriptions: Description[];
+  full_text: string;
+  descriptions?: Description[];
 }
 
 interface Description {
@@ -44,6 +45,7 @@ const initMbti: Mbti = {
   recognition: Recognition.N,
   decision: Decision.T,
   life_style: LifePattern.J,
+  full_text: "ENTJ",
   descriptions: [],
 };
 
@@ -57,13 +59,12 @@ function App({ signOut, user }: WithAuthenticatorProps) {
 
   useEffect(() => {
     fetchMbtis();
-  }, []);
+  }, [mbtis]);
 
   async function fetchMbtis() {
     try {
       const mbtiData = await API.get("api", "/mbtis", { headers: {} });
       const mbtis = mbtiData.Items;
-      console.log(mbtis);
       setMbtis(mbtis);
     } catch (err) {
       console.log("error fetching todos", err);
@@ -77,8 +78,22 @@ function App({ signOut, user }: WithAuthenticatorProps) {
       };
       if (!username || !energy || !recognition || !decision || !life_style)
         return;
-      setMbtis([...mbtis, { ...formState }]);
-      await API.post("api", "/mbtis", { headers: {} });
+      const data = {
+        username: username,
+        full_text: energy + recognition + decision + life_style,
+        energy: energy,
+        recognition: recognition,
+        decision: decision,
+        life_style: life_style,
+      };
+      const payload = {
+        headers: {},
+        body: data,
+      };
+      await API.post("api", "/mbtis", payload).then((response) => {
+        mbtis.push(data);
+        setMbtis(mbtis);
+      });
     } catch (err) {
       console.log("error creating mbti:", err);
     }
@@ -108,7 +123,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
                 label="이름"
                 variant="standard"
                 onChange={(event: { target: { value: string } }) =>
-                  setInput("name", event.target.value)
+                  setInput("username", event.target.value)
                 }
               />
             </div>
@@ -190,7 +205,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
                     event: React.MouseEvent<HTMLElement>,
                     value: string
                   ) => {
-                    setInput("life_pattern", value);
+                    setInput("life_style", value);
                   }}
                   aria-label="Platform"
                 >
