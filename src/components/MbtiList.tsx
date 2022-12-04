@@ -32,6 +32,7 @@ export const MbtiTable = (props: MbtiTablePropsListType) => (
         <TableCell as="th">Name</TableCell>
         <TableCell as="th">MBTI</TableCell>
         <TableCell as="th">극단적 단점</TableCell>
+        <TableCell as="th">유형별 팩폭</TableCell>
       </TableRow>
     </TableHead>
     <TableBody>
