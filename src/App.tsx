@@ -25,21 +25,26 @@ import {
 Amplify.configure(awsExports);
 
 interface Mbti {
-  id: string;
-  name: string;
+  username: string;
   energy: Energy;
   recognition: Recognition;
   decision: Decision;
-  life_pattern: LifePattern;
+  life_style: LifePattern;
+  descriptions: Description[];
+}
+
+interface Description {
+  data: string;
+  display_name: string;
 }
 
 const initMbti: Mbti = {
-  id: "",
-  name: "",
+  username: "",
   energy: Energy.E,
   recognition: Recognition.N,
   decision: Decision.T,
-  life_pattern: LifePattern.J,
+  life_style: LifePattern.J,
+  descriptions: [],
 };
 
 function App({ signOut, user }: WithAuthenticatorProps) {
@@ -57,7 +62,8 @@ function App({ signOut, user }: WithAuthenticatorProps) {
   async function fetchMbtis() {
     try {
       const mbtiData = await API.get("api", "/mbtis", { headers: {} });
-      const mbtis = mbtiData.data.listMbtis.items;
+      const mbtis = mbtiData.Items;
+      console.log(mbtis);
       setMbtis(mbtis);
     } catch (err) {
       console.log("error fetching todos", err);
@@ -66,10 +72,10 @@ function App({ signOut, user }: WithAuthenticatorProps) {
 
   async function addMbti() {
     try {
-      const { name, energy, recognition, decision, life_pattern } = {
+      const { username, energy, recognition, decision, life_style } = {
         ...formState,
       };
-      if (!name || !energy || !recognition || !decision || !life_pattern)
+      if (!username || !energy || !recognition || !decision || !life_style)
         return;
       setMbtis([...mbtis, { ...formState }]);
       await API.post("api", "/mbtis", { headers: {} });
@@ -177,7 +183,7 @@ function App({ signOut, user }: WithAuthenticatorProps) {
                 </ToggleButtonGroup>
                 {/* J/P */}
                 <ToggleButtonGroup
-                  value={formState.life_pattern}
+                  value={formState.life_style}
                   color="primary"
                   exclusive
                   onChange={(
