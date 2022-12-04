@@ -1,28 +1,45 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const getTodo = /* GraphQL */ `
-  query GetTodo($id: ID!) {
-    getTodo(id: $id) {
+export const getDescription = /* GraphQL */ `
+  query GetDescription($id: ID!) {
+    getDescription(id: $id) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const listTodos = /* GraphQL */ `
-  query ListTodos(
-    $filter: ModelTodoFilterInput
+export const listDescriptions = /* GraphQL */ `
+  query ListDescriptions(
+    $filter: ModelDescriptionFilterInput
     $limit: Int
     $nextToken: String
   ) {
-    listTodos(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    listDescriptions(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
-        name
-        description
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
         createdAt
         updatedAt
       }
@@ -39,6 +56,17 @@ export const getMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -58,6 +86,89 @@ export const listMbtis = /* GraphQL */ `
         recognition
         decision
         life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getMbtiDescriptions = /* GraphQL */ `
+  query GetMbtiDescriptions($id: ID!) {
+    getMbtiDescriptions(id: $id) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const listMbtiDescriptions = /* GraphQL */ `
+  query ListMbtiDescriptions(
+    $filter: ModelMbtiDescriptionsFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    listMbtiDescriptions(
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        descriptionID
+        mbtiID
+        description {
+          id
+          type
+          mbti
+          data
+          display_name
+          createdAt
+          updatedAt
+        }
+        mbti {
+          id
+          name
+          energy
+          recognition
+          decision
+          life_pattern
+          full_text
+          createdAt
+          updatedAt
+        }
         createdAt
         updatedAt
       }

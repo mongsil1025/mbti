@@ -1,34 +1,76 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const onCreateTodo = /* GraphQL */ `
-  subscription OnCreateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onCreateTodo(filter: $filter) {
+export const onCreateDescription = /* GraphQL */ `
+  subscription OnCreateDescription(
+    $filter: ModelSubscriptionDescriptionFilterInput
+  ) {
+    onCreateDescription(filter: $filter) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onUpdateTodo = /* GraphQL */ `
-  subscription OnUpdateTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onUpdateTodo(filter: $filter) {
+export const onUpdateDescription = /* GraphQL */ `
+  subscription OnUpdateDescription(
+    $filter: ModelSubscriptionDescriptionFilterInput
+  ) {
+    onUpdateDescription(filter: $filter) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const onDeleteTodo = /* GraphQL */ `
-  subscription OnDeleteTodo($filter: ModelSubscriptionTodoFilterInput) {
-    onDeleteTodo(filter: $filter) {
+export const onDeleteDescription = /* GraphQL */ `
+  subscription OnDeleteDescription(
+    $filter: ModelSubscriptionDescriptionFilterInput
+  ) {
+    onDeleteDescription(filter: $filter) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -43,6 +85,17 @@ export const onCreateMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -57,6 +110,17 @@ export const onUpdateMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -71,6 +135,134 @@ export const onDeleteMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onCreateMbtiDescriptions = /* GraphQL */ `
+  subscription OnCreateMbtiDescriptions(
+    $filter: ModelSubscriptionMbtiDescriptionsFilterInput
+  ) {
+    onCreateMbtiDescriptions(filter: $filter) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onUpdateMbtiDescriptions = /* GraphQL */ `
+  subscription OnUpdateMbtiDescriptions(
+    $filter: ModelSubscriptionMbtiDescriptionsFilterInput
+  ) {
+    onUpdateMbtiDescriptions(filter: $filter) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const onDeleteMbtiDescriptions = /* GraphQL */ `
+  subscription OnDeleteMbtiDescriptions(
+    $filter: ModelSubscriptionMbtiDescriptionsFilterInput
+  ) {
+    onDeleteMbtiDescriptions(filter: $filter) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

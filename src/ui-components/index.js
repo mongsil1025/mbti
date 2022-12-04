@@ -72,7 +72,3 @@ export { default as DpDialog } from "./DpDialog";
 export { default as SpH4Headline } from "./SpH4Headline";
 export { default as studioTheme } from "./studioTheme";
 export { default as NewForm1 } from "./NewForm1";
-export { default as MbtiCreateForm } from "./MbtiCreateForm";
-export { default as DescriptionCreateForm } from "./DescriptionCreateForm";
-export { default as DescriptionUpdateForm } from "./DescriptionUpdateForm";
-export { default as MbtiUpdateForm } from "./MbtiUpdateForm";

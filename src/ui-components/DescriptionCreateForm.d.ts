@@ -16,11 +16,13 @@ export declare type DescriptionCreateFormInputValues = {
     type?: string;
     mbti?: string;
     data?: string;
+    display_name?: string;
 };
 export declare type DescriptionCreateFormValidationValues = {
     type?: ValidationFunction<string>;
     mbti?: ValidationFunction<string>;
     data?: ValidationFunction<string>;
+    display_name?: ValidationFunction<string>;
 };
 export declare type FormProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type DescriptionCreateFormOverridesProps = {
@@ -28,6 +30,7 @@ export declare type DescriptionCreateFormOverridesProps = {
     type?: FormProps<TextFieldProps>;
     mbti?: FormProps<SelectFieldProps>;
     data?: FormProps<TextFieldProps>;
+    display_name?: FormProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type DescriptionCreateFormProps = React.PropsWithChildren<{
     overrides?: DescriptionCreateFormOverridesProps | undefined | null;

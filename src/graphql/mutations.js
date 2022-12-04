@@ -1,43 +1,79 @@
 /* eslint-disable */
 // this is an auto generated file. This will be overwritten
 
-export const createTodo = /* GraphQL */ `
-  mutation CreateTodo(
-    $input: CreateTodoInput!
-    $condition: ModelTodoConditionInput
+export const createDescription = /* GraphQL */ `
+  mutation CreateDescription(
+    $input: CreateDescriptionInput!
+    $condition: ModelDescriptionConditionInput
   ) {
-    createTodo(input: $input, condition: $condition) {
+    createDescription(input: $input, condition: $condition) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const updateTodo = /* GraphQL */ `
-  mutation UpdateTodo(
-    $input: UpdateTodoInput!
-    $condition: ModelTodoConditionInput
+export const updateDescription = /* GraphQL */ `
+  mutation UpdateDescription(
+    $input: UpdateDescriptionInput!
+    $condition: ModelDescriptionConditionInput
   ) {
-    updateTodo(input: $input, condition: $condition) {
+    updateDescription(input: $input, condition: $condition) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
   }
 `;
-export const deleteTodo = /* GraphQL */ `
-  mutation DeleteTodo(
-    $input: DeleteTodoInput!
-    $condition: ModelTodoConditionInput
+export const deleteDescription = /* GraphQL */ `
+  mutation DeleteDescription(
+    $input: DeleteDescriptionInput!
+    $condition: ModelDescriptionConditionInput
   ) {
-    deleteTodo(input: $input, condition: $condition) {
+    deleteDescription(input: $input, condition: $condition) {
       id
-      name
-      description
+      type
+      mbti
+      data
+      display_name
+      mbtis {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -55,6 +91,17 @@ export const createMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -72,6 +119,17 @@ export const updateMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
       createdAt
       updatedAt
     }
@@ -89,6 +147,137 @@ export const deleteMbti = /* GraphQL */ `
       recognition
       decision
       life_pattern
+      full_text
+      descriptions {
+        items {
+          id
+          descriptionID
+          mbtiID
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const createMbtiDescriptions = /* GraphQL */ `
+  mutation CreateMbtiDescriptions(
+    $input: CreateMbtiDescriptionsInput!
+    $condition: ModelMbtiDescriptionsConditionInput
+  ) {
+    createMbtiDescriptions(input: $input, condition: $condition) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const updateMbtiDescriptions = /* GraphQL */ `
+  mutation UpdateMbtiDescriptions(
+    $input: UpdateMbtiDescriptionsInput!
+    $condition: ModelMbtiDescriptionsConditionInput
+  ) {
+    updateMbtiDescriptions(input: $input, condition: $condition) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      createdAt
+      updatedAt
+    }
+  }
+`;
+export const deleteMbtiDescriptions = /* GraphQL */ `
+  mutation DeleteMbtiDescriptions(
+    $input: DeleteMbtiDescriptionsInput!
+    $condition: ModelMbtiDescriptionsConditionInput
+  ) {
+    deleteMbtiDescriptions(input: $input, condition: $condition) {
+      id
+      descriptionID
+      mbtiID
+      description {
+        id
+        type
+        mbti
+        data
+        display_name
+        mbtis {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      mbti {
+        id
+        name
+        energy
+        recognition
+        decision
+        life_pattern
+        full_text
+        descriptions {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
       createdAt
       updatedAt
     }

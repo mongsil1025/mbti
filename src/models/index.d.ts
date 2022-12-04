@@ -54,6 +54,7 @@ type EagerDescription = {
   readonly type?: string | null;
   readonly mbti?: MbtiEnum | keyof typeof MbtiEnum | null;
   readonly data?: string | null;
+  readonly display_name: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
@@ -63,6 +64,7 @@ type LazyDescription = {
   readonly type?: string | null;
   readonly mbti?: MbtiEnum | keyof typeof MbtiEnum | null;
   readonly data?: string | null;
+  readonly display_name: string;
   readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }

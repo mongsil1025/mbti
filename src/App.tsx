@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Amplify, API, graphqlOperation } from "aws-amplify";
-import { createMbti, createTodo } from "./graphql/mutations";
-import { listMbtis } from "./graphql/queries";
+import { createMbti } from "./graphql/mutations";
+import { listMbtiDescriptions, listMbtis } from "./graphql/queries";
 import {
   withAuthenticator,
   WithAuthenticatorProps,
@@ -12,7 +12,6 @@ import { Radio, RadioGroupField } from "@aws-amplify/ui-react";
 
 import awsExports from "./aws-exports";
 
-import { MbtiCreateForm } from "./ui-components";
 import { AlertHeadingExample } from "./components/Header";
 import { MbtiTable } from "./components/MbtiList";
 import { Decision, Energy, LifePattern, Recognition } from "./models";
@@ -57,7 +56,8 @@ function App({ signOut, user }: WithAuthenticatorProps) {
   }
 
   useEffect(() => {
-    fetchMbtis();
+    // fetchMbtis();
+    fetchMbtiDescriptions();
   }, []);
 
   async function fetchMbtis() {
@@ -66,6 +66,18 @@ function App({ signOut, user }: WithAuthenticatorProps) {
         graphqlOperation(listMbtis)
       );
       const mbtis = mbtiData.data.listMbtis.items;
+      setMbtis(mbtis);
+    } catch (err) {
+      console.log("error fetching todos", err);
+    }
+  }
+
+  async function fetchMbtiDescriptions() {
+    try {
+      const mbtiDescriptionList: GraphQLResult<any> = await API.graphql(
+        graphqlOperation(listMbtiDescriptions)
+      );
+      const mbtis = mbtiDescriptionList.data.listMbtiDescriptions.items;
       setMbtis(mbtis);
     } catch (err) {
       console.log("error fetching todos", err);

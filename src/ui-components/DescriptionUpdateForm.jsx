@@ -34,16 +34,21 @@ export default function DescriptionUpdateForm(props) {
     type: undefined,
     mbti: undefined,
     data: undefined,
+    display_name: undefined,
   };
   const [type, setType] = React.useState(initialValues.type);
   const [mbti, setMbti] = React.useState(initialValues.mbti);
   const [data, setData] = React.useState(initialValues.data);
+  const [display_name, setDisplay_name] = React.useState(
+    initialValues.display_name
+  );
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     const cleanValues = { ...initialValues, ...descriptionRecord };
     setType(cleanValues.type);
     setMbti(cleanValues.mbti);
     setData(cleanValues.data);
+    setDisplay_name(cleanValues.display_name);
     setErrors({});
   };
   const [descriptionRecord, setDescriptionRecord] = React.useState(description);
@@ -59,6 +64,7 @@ export default function DescriptionUpdateForm(props) {
     type: [],
     mbti: [],
     data: [],
+    display_name: [{ type: "Required" }],
   };
   const runValidationTasks = async (fieldName, value) => {
     let validationResponse = validateField(value, validations[fieldName]);
@@ -81,6 +87,7 @@ export default function DescriptionUpdateForm(props) {
           type,
           mbti,
           data,
+          display_name,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -134,6 +141,7 @@ export default function DescriptionUpdateForm(props) {
               type: value,
               mbti,
               data,
+              display_name,
             };
             const result = onChange(modelFields);
             value = result?.type ?? value;
@@ -160,6 +168,7 @@ export default function DescriptionUpdateForm(props) {
               type,
               mbti: value,
               data,
+              display_name,
             };
             const result = onChange(modelFields);
             value = result?.mbti ?? value;
@@ -267,6 +276,7 @@ export default function DescriptionUpdateForm(props) {
               type,
               mbti,
               data: value,
+              display_name,
             };
             const result = onChange(modelFields);
             value = result?.data ?? value;
@@ -280,6 +290,33 @@ export default function DescriptionUpdateForm(props) {
         errorMessage={errors.data?.errorMessage}
         hasError={errors.data?.hasError}
         {...getOverrideProps(overrides, "data")}
+      ></TextField>
+      <TextField
+        label="Display name"
+        isRequired={true}
+        isReadOnly={false}
+        defaultValue={display_name}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              type,
+              mbti,
+              data,
+              display_name: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.display_name ?? value;
+          }
+          if (errors.display_name?.hasError) {
+            runValidationTasks("display_name", value);
+          }
+          setDisplay_name(value);
+        }}
+        onBlur={() => runValidationTasks("display_name", display_name)}
+        errorMessage={errors.display_name?.errorMessage}
+        hasError={errors.display_name?.hasError}
+        {...getOverrideProps(overrides, "display_name")}
       ></TextField>
       <Flex
         justifyContent="space-between"
