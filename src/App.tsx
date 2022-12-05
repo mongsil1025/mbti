@@ -28,7 +28,6 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-import { descriptions } from "./models/predefined_descriptions";
 
 Amplify.configure(awsExports);
 
@@ -39,12 +38,12 @@ interface Mbti {
   decision: Decision;
   life_style: LifePattern;
   full_text: string;
-  descriptions?: Description[];
+  descriptions?: string[];
 }
 
 interface Description {
-  data: string;
   display_name: string;
+  mbti: { [key: string]: string };
 }
 
 const initMbti: Mbti = {
@@ -60,6 +59,7 @@ const initMbti: Mbti = {
 function App({ signOut, user }: WithAuthenticatorProps) {
   const [formState, setFormState] = useState(initMbti);
   const [mbtis, setMbtis] = useState([initMbti]);
+  const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
 
   function setInput(key: string, value: string) {
     setFormState({ ...formState, [key]: value });
@@ -69,11 +69,46 @@ function App({ signOut, user }: WithAuthenticatorProps) {
     fetchMbtis();
   }, []);
 
+  async function fetchDescriptions(_mbtis: Mbti[]) {
+    try {
+      const descriptionData = await API.get("api", "/descriptions", {
+        headers: {},
+      });
+      const descriptions = descriptionData.Items;
+      setPredefinedDescriptions(descriptions);
+
+      _mbtis.forEach((mbti_item) => {
+        mbti_item.descriptions = [];
+        descriptions.forEach(
+          (description: { mbti: { [x: string]: string } }) => {
+            mbti_item.descriptions?.push(description.mbti[mbti_item.full_text]);
+          }
+        );
+      });
+      setMbtis(_mbtis);
+    } catch (err) {
+      console.log("error fetching todos", err);
+    }
+  }
+
+  // function fetchMbtis() {
+  //   API.get("api", "/mbtis", {
+  //     headers: {},
+  //   })
+  //     .then((response) => {
+  //       fetchDescriptions(response.Items);
+  //     })
+  //     .catch((error) => {
+  //       console.log("error fetching mbtis", error);
+  //     });
+  // }
+
   async function fetchMbtis() {
     try {
       const mbtiData = await API.get("api", "/mbtis", { headers: {} });
       const mbtis = mbtiData.Items;
       setMbtis(mbtis);
+      fetchDescriptions(mbtis);
     } catch (err) {
       console.log("error fetching todos", err);
     }

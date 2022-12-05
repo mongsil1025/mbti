@@ -18,7 +18,7 @@ interface Mbti {
   recognition: Recognition;
   decision: Decision;
   life_style: LifePattern;
-  descriptions?: Description[];
+  descriptions?: string[];
 }
 
 interface MbtiTablePropsListType {
@@ -48,7 +48,7 @@ export const MbtiTable = (props: MbtiTablePropsListType) => (
             </TableCell>
             {mbti.descriptions &&
               mbti.descriptions.map((description) => {
-                return <TableCell>{description.data}</TableCell>;
+                return <TableCell>{description}</TableCell>;
               })}
           </TableRow>
         );
