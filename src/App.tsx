@@ -156,7 +156,7 @@ function App() {
         console.log(response);
       });
     } catch (err) {
-      console.log("error creating mbti:", err);
+      console.log("error creating dictionary:", err);
     }
   }
 
@@ -167,7 +167,7 @@ function App() {
           marginBottom: 5,
         }}
       >
-        <Paper elevation={3} sx={{ padding: 5 }}>
+        <Paper variant="outlined" square sx={{ padding: 5 }}>
           <Stack spacing={5}>
             <Typography variant="h5" gutterBottom>
               📔 나만의 Mbti 사전
@@ -181,7 +181,9 @@ function App() {
                 setDictionaryName(event.target.value)
               }
             />
-            <Button onClick={addDictionary}>추가</Button>
+            <Button variant="contained" onClick={addDictionary}>
+              추가
+            </Button>
           </Stack>
         </Paper>
       </Box>
@@ -191,7 +193,7 @@ function App() {
           marginBottom: 5,
         }}
       >
-        <Paper elevation={3} sx={{ padding: 5 }}>
+        <Paper variant="outlined" square sx={{ padding: 5 }}>
           <Stack spacing={5}>
             <div>
               <Typography variant="h5" gutterBottom>
@@ -297,7 +299,9 @@ function App() {
                 </ToggleButtonGroup>
               </Stack>
             </div>
-            <Button onClick={addMbti}>친구 추가</Button>
+            <Button variant="contained" onClick={addMbti}>
+              친구 추가
+            </Button>
           </Stack>
         </Paper>
       </Box>
@@ -306,7 +310,7 @@ function App() {
           marginBottom: 5,
         }}
       >
-        <Paper elevation={3} sx={{ padding: 5 }}>
+        <Paper variant="outlined" square sx={{ padding: 5 }}>
           <Stack spacing={5}>
             <Typography variant="h5" gutterBottom>
               💜 친구 리스트
@@ -330,7 +334,6 @@ const styles = {
   } as React.CSSProperties,
   input: {
     border: "none",
-    backgroundColor: "#ddd",
     marginBottom: 10,
     padding: 8,
     fontSize: 18,
