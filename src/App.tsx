@@ -56,6 +56,7 @@ function App() {
   const [formState, setFormState] = useState(initMbti);
   const [mbtis, setMbtis] = useState([initMbti]);
   const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
+  const [dictionary_name, setDictionaryName] = useState("");
 
   function setInput(key: string, value: string) {
     setFormState({ ...formState, [key]: value });
@@ -143,6 +144,22 @@ function App() {
     }
   }
 
+  async function addDictionary() {
+    try {
+      const payload = {
+        headers: {},
+        body: {
+          username: dictionary_name,
+        },
+      };
+      await API.post("api", "/users", payload).then((response) => {
+        console.log(response);
+      });
+    } catch (err) {
+      console.log("error creating mbti:", err);
+    }
+  }
+
   return (
     <div style={styles.container}>
       <Box
@@ -155,6 +172,16 @@ function App() {
             <Typography variant="h5" gutterBottom>
               📔 나만의 Mbti 사전
             </Typography>
+            <TextField
+              id="standard-basic"
+              label="(필수) 사전이름을 입력해주세요"
+              variant="standard"
+              value={dictionary_name}
+              onChange={(event: { target: { value: string } }) =>
+                setDictionaryName(event.target.value)
+              }
+            />
+            <Button onClick={addDictionary}>추가</Button>
           </Stack>
         </Paper>
       </Box>
