@@ -1,8 +1,4 @@
 import React, { useEffect, useState } from "react";
-import {
-  withAuthenticator,
-  WithAuthenticatorProps,
-} from "@aws-amplify/ui-react";
 import { Amplify, API, graphqlOperation } from "aws-amplify";
 import awsExports from "./aws-exports";
 
@@ -56,7 +52,7 @@ const initMbti: Mbti = {
   descriptions: [],
 };
 
-function App({ signOut, user }: WithAuthenticatorProps) {
+function App() {
   const [formState, setFormState] = useState(initMbti);
   const [mbtis, setMbtis] = useState([initMbti]);
   const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
@@ -149,11 +145,19 @@ function App({ signOut, user }: WithAuthenticatorProps) {
 
   return (
     <div style={styles.container}>
-      <AlertHeadingExample email={user?.attributes?.email} />
-      <Button variant="contained" onClick={signOut}>
-        로그아웃
-      </Button>
-
+      <Box
+        sx={{
+          marginBottom: 5,
+        }}
+      >
+        <Paper elevation={3} sx={{ padding: 5 }}>
+          <Stack spacing={5}>
+            <Typography variant="h5" gutterBottom>
+              📔 나만의 Mbti 사전
+            </Typography>
+          </Stack>
+        </Paper>
+      </Box>
       <Box
         sx={{
           marginTop: 5,
@@ -309,4 +313,4 @@ const styles = {
   } as React.CSSProperties,
 };
 
-export default withAuthenticator(App);
+export default App;
