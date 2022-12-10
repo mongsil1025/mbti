@@ -3,7 +3,7 @@ import { Amplify, API, graphqlOperation } from "aws-amplify";
 import awsExports from "./aws-exports";
 
 import "@aws-amplify/ui-react/styles.css";
-import { AlertHeadingExample } from "./components/Header";
+import "./App.css";
 import { MbtiTable } from "./components/MbtiList";
 import {
   Decision,
@@ -161,7 +161,7 @@ function App() {
   }
 
   return (
-    <div style={styles.container}>
+    <div className="App">
       <Box
         sx={{
           marginBottom: 5,
@@ -229,6 +229,7 @@ function App() {
                     setInput("energy", value);
                   }}
                   aria-label="Platform"
+                  sx={{ width: "100%" }}
                 >
                   <ToggleButton value="E" sx={styles.mbtiRadio}>
                     E
@@ -249,6 +250,7 @@ function App() {
                     setInput("recognition", value);
                   }}
                   aria-label="Platform"
+                  sx={{ width: "100%" }}
                 >
                   <ToggleButton value="N" sx={styles.mbtiRadio}>
                     N
@@ -269,6 +271,7 @@ function App() {
                     setInput("decision", value);
                   }}
                   aria-label="Platform"
+                  sx={{ width: "100%" }}
                 >
                   <ToggleButton value="T" sx={styles.mbtiRadio}>
                     T
@@ -289,6 +292,7 @@ function App() {
                     setInput("life_style", value);
                   }}
                   aria-label="Platform"
+                  sx={{ width: "100%" }}
                 >
                   <ToggleButton value="J" sx={styles.mbtiRadio}>
                     J

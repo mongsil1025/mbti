@@ -5,19 +5,34 @@ import reportWebVitals from "./reportWebVitals";
 import { Amplify } from "aws-amplify";
 import awsExports from "./aws-exports";
 import awsconfig from "./aws-exports";
-import { ThemeProvider } from "@aws-amplify/ui-react";
-
-import "@aws-amplify/ui-react/styles.css";
-import { studioTheme } from "./ui-components";
+import { createTheme, ThemeProvider } from "@mui/material";
 
 Amplify.configure(awsconfig);
 Amplify.configure(awsExports);
+
+const theme = createTheme({
+  typography: {
+    fontFamily: [
+      "Jua",
+      "sans-serif",
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"',
+    ].join(","),
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 root.render(
-  <ThemeProvider theme={studioTheme}>
+  <ThemeProvider theme={theme}>
     <App />
   </ThemeProvider>
 );
