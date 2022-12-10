@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Amplify, API, graphqlOperation } from "aws-amplify";
+import { Amplify, API } from "aws-amplify";
 import awsExports from "./aws-exports";
 
 import "@aws-amplify/ui-react/styles.css";
@@ -24,6 +24,10 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
+import {
+  addDescriptions,
+  descriptions,
+} from "./models/predefined_descriptions";
 
 Amplify.configure(awsExports);
 
@@ -63,6 +67,7 @@ function App() {
   }
 
   useEffect(() => {
+    addDescriptions();
     fetchMbtis();
   }, []);
 
@@ -128,8 +133,6 @@ function App() {
         recognition: recognition,
         decision: decision,
         life_style: life_style,
-        // @ts-ignore
-        descriptions: descriptions[MbtiEnum[full_mbti]],
       };
       const payload = {
         headers: {},
