@@ -20,6 +20,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 import { alpha } from "@mui/material/styles";
 import { Decision, Energy, LifePattern, Recognition } from "../models";
 import { useEffect, useState } from "react";
+import { API } from "aws-amplify";
 
 interface Description {
   data: string;
@@ -35,6 +36,7 @@ interface Mbti {
   life_style: LifePattern;
   descriptions?: string[];
   edit_mode?: boolean;
+  group_id?: string;
 }
 
 interface MbtiEditParam {
@@ -44,6 +46,7 @@ interface MbtiEditParam {
 
 interface MbtiTablePropsListType {
   data: Mbti[];
+  group_id: string;
 }
 
 interface EnhancedTableToolbarProps {
@@ -77,7 +80,9 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
           {numSelected} selected
         </Typography>
       ) : (
-        ""
+        <Typography variant="body2" sx={{ color: "#3f51b5" }}>
+          수정하고 싶으면 텍스트를 클릭하세요 (현재 이름만 가능)
+        </Typography>
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
@@ -103,7 +108,7 @@ function EnhancedTableHead(props: EnhancedTableProps) {
   return (
     <TableHead>
       <TableRow>
-        <TableCell padding="checkbox">
+        <TableCell padding="checkbox" sx={{ backgroundColor: "#e8eaf6" }}>
           <Checkbox
             color="primary"
             indeterminate={numSelected > 0 && numSelected < rowCount}
@@ -114,10 +119,10 @@ function EnhancedTableHead(props: EnhancedTableProps) {
             }}
           />
         </TableCell>
-        <TableCell>Name</TableCell>
-        <TableCell>MBTI</TableCell>
-        <TableCell>극단적 단점</TableCell>
-        <TableCell>유형별 팩폭</TableCell>
+        <TableCell sx={{ backgroundColor: "#e8eaf6" }}>Name</TableCell>
+        <TableCell sx={{ backgroundColor: "#e8eaf6" }}>MBTI</TableCell>
+        <TableCell sx={{ backgroundColor: "#e8eaf6" }}>극단적 단점</TableCell>
+        <TableCell sx={{ backgroundColor: "#e8eaf6" }}>유형별 팩폭</TableCell>
       </TableRow>
     </TableHead>
   );
@@ -159,10 +164,7 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
 
   const isSelected = (name: string) => selected.indexOf(name) !== -1;
 
-  const onClickEditName = (event: React.MouseEvent<unknown>, uid: string) => {
-    const editedIndex = edited.indexOf(uid);
-    let newEdited: MbtiEditParam[] = [];
-
+  const onClickEditName = (uid: string) => {
     props.data.forEach((mbti) => {
       if (mbti.uid === uid) {
         mbti.edit_mode = !mbti.edit_mode;
@@ -172,8 +174,38 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
     });
   };
 
+  function onChangeUserName(uid: string, value: string) {
+    props.data.forEach((mbti) => {
+      if (mbti.uid === uid) {
+        mbti.username = value;
+        setState(Date.now());
+        return;
+      }
+    });
+  }
+
+  async function updateMbti(group_id: string, uid: string, username: string) {
+    try {
+      const payload = {
+        headers: {},
+        body: {
+          username: username,
+        },
+      };
+      await API.put("api", `/mbtis/${group_id}/${uid}`, payload).then(
+        (response) => {
+          console.log(response);
+          onClickEditName(uid);
+        }
+      );
+    } catch (err) {
+      console.log("error update mbti:", err);
+    }
+  }
+
   return (
     <Paper sx={{ width: "100%", mb: 2 }}>
+      <EnhancedTableToolbar numSelected={selected.length} />
       <TableContainer>
         <Table>
           <EnhancedTableHead
@@ -219,21 +251,27 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
                           placeholder="이름"
                           inputProps={ariaLabel}
                           value={mbti.username}
+                          onChange={(event: { target: { value: string } }) =>
+                            onChangeUserName(mbti.uid, event.target.value)
+                          }
                         />
-                        <IconButton aria-label="save">
+                        <IconButton
+                          aria-label="save"
+                          onClick={(event) =>
+                            updateMbti(props.group_id, mbti.uid, mbti.username)
+                          }
+                        >
                           <CheckIcon />
                         </IconButton>
                         <IconButton
                           aria-label="cancel"
-                          onClick={(event) => onClickEditName(event, mbti.uid)}
+                          onClick={(event) => onClickEditName(mbti.uid)}
                         >
                           <ClearIcon />
                         </IconButton>
                       </>
                     ) : (
-                      <span
-                        onClick={(event) => onClickEditName(event, mbti.uid)}
-                      >
+                      <span onClick={(event) => onClickEditName(mbti.uid)}>
                         {mbti.username}
                       </span>
                     )}
@@ -255,7 +293,6 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
           </TableBody>
         </Table>
       </TableContainer>
-      <EnhancedTableToolbar numSelected={selected.length} />
     </Paper>
   );
 }

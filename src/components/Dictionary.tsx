@@ -26,6 +26,7 @@ interface Mbti {
   full_text: string;
   descriptions?: string[];
   edit_mode?: boolean;
+  group_id: string;
 }
 
 interface MatchParams {
@@ -42,13 +43,15 @@ const initMbti: Mbti = {
   full_text: "ENTJ",
   descriptions: [],
   edit_mode: false,
+  group_id: "",
 };
 
 export const Dictionary = () => {
   const [formState, setFormState] = useState(initMbti);
   const [mbtis, setMbtis] = useState([initMbti]);
   const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
-  const params = useParams<{ id?: string }>();
+  const params = useParams<{ id: string }>();
+  const GROUP_ID = params.id ? params.id : "";
 
   useEffect(function () {
     fetchMbtis(params.id);
@@ -110,7 +113,7 @@ export const Dictionary = () => {
         recognition: recognition,
         decision: decision,
         life_style: life_style,
-        group_id: params.id,
+        group_id: GROUP_ID,
       };
       const payload = {
         headers: {},
@@ -132,7 +135,7 @@ export const Dictionary = () => {
           recognition: recognition,
           decision: decision,
           life_style: life_style,
-          group_id: params.id,
+          group_id: GROUP_ID,
           descriptions: add_item_descriptions,
         };
 
@@ -277,7 +280,7 @@ export const Dictionary = () => {
             <Typography variant="h5" gutterBottom>
               💜 친구 리스트
             </Typography>
-            <MbtiTable data={mbtis} />
+            <MbtiTable data={mbtis} group_id={GROUP_ID} />
           </Stack>
         </Paper>
       </Box>
