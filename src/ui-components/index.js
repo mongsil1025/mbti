@@ -70,5 +70,4 @@ export { default as Dark } from "./Dark";
 export { default as DpAppbar } from "./DpAppbar";
 export { default as DpDialog } from "./DpDialog";
 export { default as SpH4Headline } from "./SpH4Headline";
-export { default as studioTheme } from "./studioTheme";
 export { default as NewForm1 } from "./NewForm1";
