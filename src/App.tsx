@@ -5,7 +5,6 @@ import { Main } from "./components/Main";
 import { Dictionary } from "./components/Dictionary";
 
 import { Amplify, API } from "aws-amplify";
-import awsconfig from "./aws-exports";
 
 Amplify.configure({
   API: {
