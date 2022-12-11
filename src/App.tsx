@@ -41,9 +41,9 @@ interface Mbti {
   descriptions?: string[];
 }
 
-interface Description {
-  display_name: string;
-  mbti: { [key: string]: string };
+interface Dictionary {
+  id: string;
+  dictionary_name: string;
 }
 
 const initMbti: Mbti = {
@@ -61,6 +61,7 @@ function App() {
   const [mbtis, setMbtis] = useState([initMbti]);
   const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
   const [dictionary_name, setDictionaryName] = useState("");
+  const [dictionary_id, setDictionaryId] = useState("");
 
   function setInput(key: string, value: string) {
     setFormState({ ...formState, [key]: value });
@@ -69,7 +70,7 @@ function App() {
   useEffect(() => {
     addDescriptions();
     fetchMbtis();
-  }, []);
+  }, [dictionary_id]);
 
   async function fetchDescriptions(_mbtis: Mbti[]) {
     try {
@@ -107,7 +108,10 @@ function App() {
 
   async function fetchMbtis() {
     try {
-      const mbtiData = await API.get("api", "/mbtis", { headers: {} });
+      const mbtiData = await API.get("api", "/mbtis", {
+        headers: {},
+        body: { group_id: dictionary_id },
+      });
       const mbtis = mbtiData.Items;
       setMbtis(mbtis);
       fetchDescriptions(mbtis);
@@ -133,6 +137,7 @@ function App() {
         recognition: recognition,
         decision: decision,
         life_style: life_style,
+        group_id: dictionary_id,
       };
       const payload = {
         headers: {},
@@ -157,6 +162,7 @@ function App() {
       };
       await API.post("api", "/users", payload).then((response) => {
         console.log(response);
+        setDictionaryId(response.id);
       });
     } catch (err) {
       console.log("error creating dictionary:", err);

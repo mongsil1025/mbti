@@ -5,6 +5,7 @@ import {
   TableHead,
   TableRow,
 } from "@aws-amplify/ui-react";
+import { TextField } from "@mui/material";
 import { Decision, Energy, LifePattern, Recognition } from "../models";
 
 interface Description {
@@ -39,7 +40,17 @@ export const MbtiTable = (props: MbtiTablePropsListType) => (
       {props.data.map((mbti) => {
         return (
           <TableRow key={mbti.username}>
-            <TableCell>{mbti.username}</TableCell>
+            <TableCell>
+              <TextField
+                id="standard-basic"
+                label="이름"
+                variant="standard"
+                value={mbti.username}
+                // onChange={(event: { target: { value: string } }) =>
+                //   setInput("username", event.target.value)
+                // }
+              />
+            </TableCell>
             <TableCell>
               {mbti.energy}
               {mbti.recognition}
