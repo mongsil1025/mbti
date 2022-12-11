@@ -1,14 +1,14 @@
 import { Alert } from "@aws-amplify/ui-react";
 
 interface HeaderProps {
-  email?: string;
+  link: string;
 }
 
-export const AlertHeadingExample = (props: HeaderProps) => {
+export const Header = (props: HeaderProps) => {
   return (
     <>
-      <Alert variation="success" heading={`Hello👋 ${props.email}`}>
-        This is your Mbti Maps
+      <Alert variation="success" heading={`Hello👋 주소를 복사해두세요!`}>
+        {props.link}
       </Alert>
     </>
   );

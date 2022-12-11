@@ -51,6 +51,8 @@ interface MbtiTablePropsListType {
 
 interface EnhancedTableToolbarProps {
   numSelected: number;
+  onClickDelete: (group_id: string) => Promise<void>;
+  groupId: string;
 }
 
 function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
@@ -86,7 +88,7 @@ function EnhancedTableToolbar(props: EnhancedTableToolbarProps) {
       )}
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
+          <IconButton onClick={(event) => props.onClickDelete(props.groupId)}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
@@ -134,6 +136,7 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
   const [state, setState] = useState(Date.now());
 
   const handleClick = (event: React.MouseEvent<unknown>, name: string) => {
+    console.log(name);
     const selectedIndex = selected.indexOf(name);
     let newSelected: readonly string[] = [];
 
@@ -184,6 +187,34 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
     });
   }
 
+  async function onClickDelete(group_id: string) {
+    try {
+      const payload = {
+        headers: {},
+        body: {
+          uids: selected,
+        },
+      };
+      await API.del("api", `/mbtis/${group_id}`, payload).then((response) => {
+        console.log(response);
+        var deleted_index: number[] = [];
+        props.data.forEach((mbti, index) => {
+          selected.forEach((s) => {
+            if (mbti.uid === s) {
+              deleted_index.push(index);
+            }
+          });
+        });
+        for (var i = deleted_index.length - 1; i >= 0; i--) {
+          props.data.splice(deleted_index[i], 1);
+        }
+        setState(Date.now());
+      });
+    } catch (err) {
+      console.log("error delete mbti:", err);
+    }
+  }
+
   async function updateMbti(group_id: string, uid: string, username: string) {
     try {
       const payload = {
@@ -205,7 +236,11 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
 
   return (
     <Paper sx={{ width: "100%", mb: 2 }}>
-      <EnhancedTableToolbar numSelected={selected.length} />
+      <EnhancedTableToolbar
+        numSelected={selected.length}
+        groupId={props.group_id}
+        onClickDelete={onClickDelete}
+      />
       <TableContainer>
         <Table>
           <EnhancedTableHead

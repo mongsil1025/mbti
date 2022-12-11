@@ -14,6 +14,7 @@ import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Energy, Recognition, Decision, LifePattern } from "../models";
+import { Header } from "./Header";
 import MbtiTable from "./MbtiList";
 
 interface Mbti {
@@ -148,6 +149,7 @@ export const Dictionary = () => {
 
   return (
     <>
+      <Header link={`${window.location.href}`} />
       <Box
         sx={{
           marginTop: 5,

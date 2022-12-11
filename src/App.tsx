@@ -16,18 +16,6 @@ import { Dictionary } from "./components/Dictionary";
 Amplify.configure(awsExports);
 
 function App() {
-  // function fetchMbtis() {
-  //   API.get("api", "/mbtis", {
-  //     headers: {},
-  //   })
-  //     .then((response) => {
-  //       fetchDescriptions(response.Items);
-  //     })
-  //     .catch((error) => {
-  //       console.log("error fetching mbtis", error);
-  //     });
-  // }
-
   return (
     <div className="App">
       <BrowserRouter>
