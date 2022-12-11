@@ -14,9 +14,10 @@ import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Energy, Recognition, Decision, LifePattern } from "../models";
-import { MbtiTable } from "./MbtiList";
+import MbtiTable from "./MbtiList";
 
 interface Mbti {
+  uid: string;
   username: string;
   energy: Energy;
   recognition: Recognition;
@@ -24,6 +25,7 @@ interface Mbti {
   life_style: LifePattern;
   full_text: string;
   descriptions?: string[];
+  edit_mode?: boolean;
 }
 
 interface MatchParams {
@@ -31,6 +33,7 @@ interface MatchParams {
 }
 
 const initMbti: Mbti = {
+  uid: "",
   username: "",
   energy: Energy.E,
   recognition: Recognition.N,
@@ -38,6 +41,7 @@ const initMbti: Mbti = {
   life_style: LifePattern.J,
   full_text: "ENTJ",
   descriptions: [],
+  edit_mode: false,
 };
 
 export const Dictionary = () => {
@@ -82,6 +86,7 @@ export const Dictionary = () => {
             mbti_item.descriptions?.push(description.mbti[mbti_item.full_text]);
           }
         );
+        mbti_item.edit_mode = false;
       });
       setMbtis(_mbtis);
     } catch (err) {
@@ -120,6 +125,7 @@ export const Dictionary = () => {
         );
 
         const add_item = {
+          uid: response.uid,
           username: username,
           full_text: full_mbti,
           energy: energy,
