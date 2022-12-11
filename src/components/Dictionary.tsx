@@ -9,8 +9,8 @@ import {
   ToggleButtonGroup,
   Typography,
 } from "@mui/material";
-
 import { API } from "aws-amplify";
+
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Energy, Recognition, Decision, LifePattern } from "../models";

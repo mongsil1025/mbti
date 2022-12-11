@@ -1,7 +1,3 @@
-// @ts-check
-import { initSchema } from '@aws-amplify/datastore';
-import { schema } from './schema';
-
 const MbtiEnum = {
   "ISTJ": "ISTJ",
   "ISTP": "ISTP",
@@ -41,11 +37,7 @@ const Energy = {
   "I": "I"
 };
 
-const { Description, Mbti } = initSchema(schema);
-
 export {
-  Description,
-  Mbti,
   MbtiEnum,
   LifePattern,
   Decision,
