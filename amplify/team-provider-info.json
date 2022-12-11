@@ -10,6 +10,17 @@
       "StackName": "amplify-amplify7780e94166254-staging-205817",
       "StackId": "arn:aws:cloudformation:ap-northeast-2:205562629531:stack/amplify-amplify7780e94166254-staging-205817/89869fb0-7996-11ed-a0f1-0ac9759d86d4",
       "AmplifyAppId": "dherbihqqzhz5"
+    },
+    "categories": {
+      "function": {
+        "mbti103dc356": {
+          "deploymentBucketName": "amplify-amplify7780e94166254-staging-205817-deployment",
+          "s3Key": "amplify-builds/mbti103dc356-4a7768536d634b4c4245-build.zip"
+        }
+      },
+      "api": {
+        "api": {}
+      }
     }
   }
 }

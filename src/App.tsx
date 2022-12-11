@@ -4,6 +4,20 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Main } from "./components/Main";
 import { Dictionary } from "./components/Dictionary";
 
+import { Amplify, API } from "aws-amplify";
+import awsconfig from "./aws-exports";
+
+Amplify.configure({
+  API: {
+    endpoints: [
+      {
+        name: "api",
+        endpoint: "https://0mwo6wwcda.execute-api.ap-northeast-2.amazonaws.com",
+      },
+    ],
+  },
+});
+
 function App() {
   return (
     <div className="App">
