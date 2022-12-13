@@ -63,9 +63,8 @@ export const Dictionary = () => {
   }
   async function fetchMbtis(id?: string) {
     try {
-      const mbtiData = await API.get("api", "/mbtis", {
+      const mbtiData = await API.get("api", `/mbtis/${id}`, {
         headers: {},
-        body: { group_id: id },
       });
       const mbtis = mbtiData.Items;
       setMbtis(mbtis);
@@ -159,24 +158,25 @@ export const Dictionary = () => {
         <Paper variant="outlined" square sx={{ padding: 5 }}>
           <Stack spacing={5}>
             <div>
-              <Typography variant="h5" gutterBottom>
-                🧡 그룹에 추가할 친구의 이름을 적어주세요
+              <Typography variant="h6" gutterBottom>
+                🧡 이름
               </Typography>
               <TextField
                 id="standard-basic"
                 label="이름"
                 variant="standard"
+                sx={{ width: "100%" }}
                 onChange={(event: { target: { value: string } }) =>
                   setInput("username", event.target.value)
                 }
               />
             </div>
             <div>
-              <Typography variant="h5" gutterBottom>
-                💛 친구의 MBTI 를 입력해주세요
+              <Typography variant="h6" gutterBottom>
+                💛 MBTI
               </Typography>
               <Stack
-                direction="row"
+                direction="column"
                 spacing={2}
                 divider={<Divider orientation="vertical" flexItem />}
               >
@@ -306,6 +306,6 @@ const styles = {
     fontSize: 18,
   },
   mbtiRadio: {
-    width: 100,
+    width: "100%",
   } as React.CSSProperties,
 };

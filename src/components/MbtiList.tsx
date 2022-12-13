@@ -235,14 +235,19 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
   }
 
   return (
-    <Paper sx={{ width: "100%", mb: 2 }}>
+    <Paper sx={{ width: "100%", mb: 2, overflow: "hidden" }}>
       <EnhancedTableToolbar
         numSelected={selected.length}
         groupId={props.group_id}
         onClickDelete={onClickDelete}
       />
-      <TableContainer>
-        <Table>
+      <TableContainer component={Paper} sx={{ maxHeight: 440 }}>
+        <Table
+          sx={{ minWidth: "500px" }}
+          size="small"
+          aria-label="a dense table"
+          stickyHeader
+        >
           <EnhancedTableHead
             numSelected={selected.length}
             onSelectAllClick={handleSelectAllClick}
@@ -263,6 +268,7 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
                   tabIndex={-1}
                   key={mbti.uid}
                   selected={isItemSelected}
+                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
                 >
                   <TableCell padding="checkbox">
                     <Checkbox
@@ -274,12 +280,7 @@ export default function MbtiTable(props: MbtiTablePropsListType) {
                       }}
                     />
                   </TableCell>
-                  <TableCell
-                    component="th"
-                    scope="row"
-                    padding="none"
-                    sx={{ width: "300px" }}
-                  >
+                  <TableCell>
                     {mbti.edit_mode ? (
                       <>
                         <Input

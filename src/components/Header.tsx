@@ -21,13 +21,14 @@ export const Header = (props: HeaderProps) => {
     <>
       <Alert severity="success">
         <AlertTitle>Hello👋 주소를 복사해두세요!</AlertTitle>
-
-        <Stack direction="row" alignItems="center">
-          <span>{props.link}</span>
-          <IconButton aria-label="copy" size="small" onClick={copy}>
-            <ContentCopyIcon fontSize="small" />
-          </IconButton>
-        </Stack>
+        <Button
+          size="small"
+          // variant="contained"
+          endIcon={<ContentCopyIcon fontSize="small" />}
+          onClick={copy}
+        >
+          URL 복사하기
+        </Button>
       </Alert>
     </>
   );
