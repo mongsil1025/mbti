@@ -14,6 +14,7 @@ import { API } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Energy, Recognition, Decision, LifePattern } from "../models";
+import DemoPie from "./Chart";
 import { Header } from "./Header";
 import MbtiTable from "./MbtiList";
 
@@ -286,6 +287,7 @@ export const Dictionary = () => {
           </Stack>
         </Paper>
       </Box>
+      <DemoPie data={mbtis} />
     </>
   );
 };
