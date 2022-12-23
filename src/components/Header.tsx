@@ -9,6 +9,7 @@ import {
 import ContentCopyIcon from "@mui/icons-material/ContentCopy";
 
 interface HeaderProps {
+  name: string;
   link: string;
 }
 

@@ -50,6 +50,7 @@ const initMbti: Mbti = {
 
 export const Dictionary = () => {
   const [formState, setFormState] = useState(initMbti);
+  const [name, setName] = useState("");
   const [mbtis, setMbtis] = useState([initMbti]);
   const [predefined_descriptions, setPredefinedDescriptions] = useState([]);
   const params = useParams<{ id: string }>();
@@ -57,6 +58,7 @@ export const Dictionary = () => {
 
   useEffect(function () {
     fetchMbtis(params.id);
+    getDictionary(params.id);
   }, []);
 
   function setInput(key: string, value: string) {
@@ -70,6 +72,17 @@ export const Dictionary = () => {
       const mbtis = mbtiData.Items;
       setMbtis(mbtis);
       fetchDescriptions(mbtis);
+    } catch (err) {
+      console.log("error fetching todos", err);
+    }
+  }
+
+  async function getDictionary(id?: string) {
+    try {
+      const dictionary = await API.get("api", `/users/${id}`, {
+        headers: {},
+      });
+      setName(dictionary.Items[0]);
     } catch (err) {
       console.log("error fetching todos", err);
     }
@@ -149,7 +162,7 @@ export const Dictionary = () => {
 
   return (
     <>
-      <Header link={`${window.location.href}`} />
+      <Header name={name} link={`${window.location.href}`} />
       <Box
         sx={{
           marginTop: 5,
