@@ -287,7 +287,18 @@ export const Dictionary = () => {
           </Stack>
         </Paper>
       </Box>
-      <DemoPie data={mbtis} />
+      <Box
+        sx={{
+          marginBottom: 5,
+        }}
+      >
+        <Paper variant="outlined" square sx={{ padding: 5 }}>
+          <Typography variant="h5" gutterBottom>
+            📊 통계
+          </Typography>
+          <DemoPie data={mbtis} />
+        </Paper>
+      </Box>
     </>
   );
 };
